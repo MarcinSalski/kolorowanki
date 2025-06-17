@@ -1,4 +1,8 @@
 openai==1.47.0
-langfuse
 streamlit
 python-dotenv
+boto3
+os
+io
+requests
+pandas

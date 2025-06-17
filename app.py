@@ -1,18 +1,14 @@
 import streamlit as st
 import pandas as pd
 import requests
-import time
 import boto3
 import os
 import io
-import openai
 from dotenv import load_dotenv
-from IPython.display import Markdown, Image
+from IPython.display import Image
 from openai import OpenAI
 from openai import AuthenticationError
-from pathlib import Path
 from botocore.exceptions import ClientError
-from PIL import Image as PILImage
 
 
 
