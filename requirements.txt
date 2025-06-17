@@ -4,3 +4,4 @@ python-dotenv
 boto3
 IPython
 fsspec
+s3fs
