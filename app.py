@@ -691,7 +691,7 @@ with list_tab:
     with c0:
         if st.button("Zapamiętaj te projekty",use_container_width=True):
             list_name=st.session_state["list_name"]
-            st.session_state["descriptions_df"].to_csv(f"s3://{BUCKET_NAME}/{list_name}",index=False)
+            save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.success('Lista zapisana do pliku')
             st.rerun()
     with c1:
@@ -699,7 +699,7 @@ with list_tab:
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             list_name=st.session_state["list_name"]
             st.session_state["descriptions_df"]=descriptions_df
-            st.session_state["descriptions_df"].to_csv(f"s3://{BUCKET_NAME}/{list_name}",index=False)
+            save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.success('Lista usunięta')
             st.rerun()
 
@@ -753,7 +753,7 @@ with image_tab:
             if project_id>0:
                 descriptions_df = descriptions_df[descriptions_df['Nr projektu'] != project_id]
                 st.session_state["descriptions_df"]=descriptions_df
-                descriptions_df.to_csv(f"s3://{BUCKET_NAME}/{list_name}",index=False)
+                save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
                 st.success('Opis usunięty')
                 st.rerun()
             else:
@@ -802,7 +802,8 @@ with gallery_tab:
 with logout_tab:
     if st.button("Wyloguj się", use_container_width=True):
         list_name=st.session_state["list_name"]
-        st.session_state["descriptions_df"].to_csv(f"s3://{BUCKET_NAME}/{list_name}",index=False)
+        list_file=f"{PATH_TO_DO}{list_name}"
+        save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
         st.session_state["user_name"]=""
         st.session_state["openai_api_key"]=""
         st.rerun()
