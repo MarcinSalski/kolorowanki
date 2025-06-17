@@ -524,24 +524,25 @@ if not st.session_state.get("user_name"):
 
 
 if not st.session_state.get("openai_api_key"):
+    st.session_state["openai_api_key"]="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"
     
-    if "OPENAI_API_KEY" in os.environ:
-        st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
+#     if "OPENAI_API_KEY" in os.environ:
+#         st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
 
-    else:
-        st.info("Podaj klucz Open AI API Key")
-        st.session_state["openai_api_key"] = st.text_input(" ", type="password")
-        openai_api_key=st.session_state["openai_api_key"]
-        if st.session_state["openai_api_key"]:
-            if openai_api_key_check(openai_api_key) == True:
-                st.rerun()
-            else:
-                st.markdown("Niepoprawny klucz Open AI")
-                st.session_state["openai_api_key"]=""
-                st.stop()
+#     else:
+#         st.info("Podaj klucz Open AI API Key")
+#         st.session_state["openai_api_key"] = st.text_input(" ", type="password")
+#         openai_api_key=st.session_state["openai_api_key"]
+#         if st.session_state["openai_api_key"]:
+#             if openai_api_key_check(openai_api_key) == True:
+#                 st.rerun()
+#             else:
+#                 st.markdown("Niepoprawny klucz Open AI")
+#                 st.session_state["openai_api_key"]=""
+#                 st.stop()
 
-if not st.session_state.get("openai_api_key"):
-    st.stop()
+# if not st.session_state.get("openai_api_key"):
+#     st.stop()
 
 
 # Main section after login
@@ -595,7 +596,7 @@ st.markdown(f"Jesteś zalogowany jako {user_name}")
 
 if "OPENAI_API_KEY" in os.environ:
     st.write("🔑 Klucz środowiskowy znaleziony:")
-    
+    st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
