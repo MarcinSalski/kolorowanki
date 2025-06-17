@@ -50,6 +50,26 @@ def list_file_exists(bucket, key):
             raise  # Inny błąd — rzuć dalej
 
 
+# Saving design lists as public files
+def save_df_as_public_csv(df, bucket, key):
+    buffer = io.StringIO()
+    df.to_csv(buffer, index=False)
+    # s3 = boto3.client(
+    #     "s3",
+    #     region_name="fra1",
+    #     endpoint_url="https://fra1.digitaloceanspaces.com",
+    #     aws_access_key_id="TWÓJ_KEY",
+    #     aws_secret_access_key="TWÓJ_SECRET"
+    # )
+    s3.put_object(
+        Bucket=bucket,
+        Key=key,
+        Body=buffer.getvalue(),
+        ACL="public-read",
+        ContentType="text/csv"
+    )
+
+
 
 # The function to generate design descriptions for kids
 def get_description_for_kids(user_prompt):
@@ -480,8 +500,7 @@ if not st.session_state.get("user_name"):
         list_name=f"{list_folder_name}/{user_name}_design_list.csv"
         if list_file_exists(BUCKET_NAME, list_name):
             list_file=f"{PATH_TO_DO}{list_name}"
-            st.session_state["full_list_df"]=pd.read_csv('https://kolorowanki.fra1.digitaloceanspaces.com/lists/Marcin_design_list.csv')
-                #f"{PATH_TO_DO}/{list_name}")
+            st.session_state["full_list_df"]=pd.read_csv(f"{PATH_TO_DO}/{list_name}")
             descriptions_df=st.session_state["full_list_df"]
             st.session_state["descriptions_df"]=descriptions_df
             st.session_state['descr_counter']=descriptions_df['Nr projektu'].max()
@@ -491,8 +510,7 @@ if not st.session_state.get("user_name"):
         else:
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             list_file=f"{PATH_TO_DO}{list_name}"
-            descriptions_df.to_csv(
-                f"{PATH_TO_DO}{list_name}",index=False)
+            save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.session_state["list_file"]=list_file
             st.session_state["full_list_df"]=descriptions_df
             st.session_state["descriptions_df"]=descriptions_df
