@@ -443,7 +443,13 @@ def display_images_with_download():
 # OpenAI API key protection and geting user name
 
 load_dotenv()
-s3=boto3.client("s3")
+s3 = boto3.client(
+    's3',
+    region_name='fra1',
+    endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+)
 BUCKET_NAME="kolorowanki"
 img_fold_n='images'
 list_folder_name='lists'
