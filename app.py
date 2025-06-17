@@ -481,7 +481,7 @@ if not st.session_state.get("user_name"):
         if list_file_exists(BUCKET_NAME, list_name):
             list_file=f"{PATH_TO_DO}{list_name}"
             st.session_state["full_list_df"]=pd.read_csv(
-                f"s3://{BUCKET_NAME}/{list_name}")
+                f"{PATH_TO_DO}/{list_name}")
             descriptions_df=st.session_state["full_list_df"]
             st.session_state["descriptions_df"]=descriptions_df
             st.session_state['descr_counter']=descriptions_df['Nr projektu'].max()
@@ -492,7 +492,7 @@ if not st.session_state.get("user_name"):
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             list_file=f"{PATH_TO_DO}{list_name}"
             descriptions_df.to_csv(
-                f"s3://{BUCKET_NAME}/{list_name}",index=False)
+                f"{PATH_TO_DO}{list_name}",index=False)
             st.session_state["list_file"]=list_file
             st.session_state["full_list_df"]=descriptions_df
             st.session_state["descriptions_df"]=descriptions_df
