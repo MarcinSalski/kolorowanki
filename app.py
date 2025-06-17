@@ -447,10 +447,13 @@ print("Endpoint URL:", os.environ.get("AWS_ENDPOINT_URL_S3"))  # Dodaj to
 load_dotenv()
 s3 = boto3.client(
     's3',
-    region_name='fra1',
-    endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
-    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    #region_name='fra1',
+    #endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
+    endpoint_url='https://fra1.digitaloceanspaces.com',
+    #aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    AWS_ACCESS_KEY_ID='DO00WCGEXAV7Q69UVVQP',
+    #aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_SECRET_ACCESS_KEY='cEBjAEWGLxiMLasnhC66v8wlMibddiQvJkUxyjQzLGY'
 )
 BUCKET_NAME="kolorowanki"
 img_fold_n='images'
