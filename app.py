@@ -595,7 +595,7 @@ st.markdown(f"Jesteś zalogowany jako {user_name}")
 
 if "OPENAI_API_KEY" in os.environ:
     st.write("🔑 Klucz środowiskowy znaleziony:")
-    st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
+    
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
