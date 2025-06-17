@@ -610,7 +610,7 @@ with design_tab:
     c0, c1 = st.columns([0.3,0.7])
     
     with c0:
-        number_of_descriptions = st.selectbox("Ile zrobić projektów?", ["1","2","3","4","5"]) 
+        number_of_descriptions = st.selectbox("Ile zrobić projektów?", ["jeden","dwa","trzy","cztery","pięć"]) 
         design_type=st.selectbox('Rodzaj kolorowanki',['dla dzieci','dla dorosłych','satyryczny'])  
     
     with c1:
