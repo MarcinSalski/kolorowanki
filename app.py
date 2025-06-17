@@ -480,8 +480,8 @@ if not st.session_state.get("user_name"):
         list_name=f"{list_folder_name}/{user_name}_design_list.csv"
         if list_file_exists(BUCKET_NAME, list_name):
             list_file=f"{PATH_TO_DO}{list_name}"
-            st.session_state["full_list_df"]=pd.read_csv(
-                f"{PATH_TO_DO}/{list_name}")
+            st.session_state["full_list_df"]=pd.read_csv('https://kolorowanki.fra1.digitaloceanspaces.com/lists/Marcin_design_list.csv')
+                #f"{PATH_TO_DO}/{list_name}")
             descriptions_df=st.session_state["full_list_df"]
             st.session_state["descriptions_df"]=descriptions_df
             st.session_state['descr_counter']=descriptions_df['Nr projektu'].max()
