@@ -73,8 +73,8 @@ def save_df_as_public_csv(df, bucket, key):
 
 # The function to generate design descriptions for kids
 def get_description_for_kids(user_prompt):
-    openai_client = get_openai_client()
-    response = openai_client.chat.completions.create(
+    client = get_openai_client()
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {
