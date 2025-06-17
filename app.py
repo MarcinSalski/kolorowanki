@@ -442,6 +442,8 @@ def display_images_with_download():
 
 # OpenAI API key protection and geting user name
 
+print("Endpoint URL:", os.environ.get("AWS_ENDPOINT_URL_S3"))  # Dodaj to
+
 load_dotenv()
 s3 = boto3.client(
     's3',
