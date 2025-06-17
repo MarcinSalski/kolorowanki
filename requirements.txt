@@ -2,7 +2,3 @@ openai==1.47.0
 streamlit
 python-dotenv
 boto3
-os
-io
-requests
-pandas
