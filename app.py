@@ -691,6 +691,7 @@ with list_tab:
     with c0:
         if st.button("Zapamiętaj te projekty",use_container_width=True):
             list_name=st.session_state["list_name"]
+            descriptions_df=st.session_state["descriptions_df"]
             save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.success('Lista zapisana do pliku')
             st.rerun()
