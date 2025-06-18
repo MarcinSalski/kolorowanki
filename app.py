@@ -76,25 +76,18 @@ def get_description_for_kids(user_prompt):
     client = get_openai_client()
     response = client.chat.completions.create(
         model="gpt-4o",
-        messages=[
-            {
-                "role": "system",
-                "content": """"
-                    Jesteś projektantem kolorowanek dla dzieci. Na podstawie promptu wpisanego 
-                    przez użytkownika zaproponuj tytuł kolorowanki oraz opis rysunku, który 
+        messages=["""
+                    Jesteś projektantem kolorowanek dla dzieci. Temat kolorowanki to "przygoda w lesie"
+                    zaproponuj tytuł kolorowanki oraz opis rysunku, który 
                     w następnym kroku zostanie utworzony. Rysunek ma być prosty i łatwy 
                     do pokolorowania. Postacie i przedmioty na rysunku powinny mieć wygląd 
                     dziecinny i bajkowy. Jeśli na rysunku występują sceny lub postacie z bajek, 
                     to nawiąż w swoim opisie do treści odpowiedniej bajki.
-                    - Jeśli opis wprowadzony przez użytkownika jest dokładny i szczegółowy 
-                    zaproponuj niewielkie modyfikacje w celu utworzenia wariantów. 
-                    - Jeśli opis wprowadzony przez użytkownika jest uproszczony - rozwiń go 
-                    dodając szczegóły, otoczenie, tło i tym podobne elementy. 
                     - W swoim opisie nie umieszczaj kolorów. To ma być opis czarno-białego szkicu.
                     - Opis rysunku powinien mieć formę promptu, na podstawie którego sztuczna inteligencja 
                     wygeneruje obraz w następnym kroku działania aplikacji
                     - Opis każdego rysunku nie powinien być dłuższy niż 50 słów.
-                    - Zrób tyle opisów o ile projektów prosi klient.
+                    - Zrób pięć opisów 
                     - Każdy opis przedstaw w formacie jak poniżej. 
                         Projekt 1: 
                         Tytuł: 
@@ -108,16 +101,11 @@ def get_description_for_kids(user_prompt):
 
                     - Nie używaj cudzysłowia przy podawaniu tytułu.
                     - Nie proponuj treści szokujących, strasznych, wulgarnych ani obscenicznych.
-                """
-             },
-            {"role": "user", "content": user_prompt }           
+                """                 
         ]
     )
 
-    return {
-        "role": "assistant",
-        "content": response.choices[0].message.content,
-    }
+    return {response.choices[0].message.content,}
 
 
 
