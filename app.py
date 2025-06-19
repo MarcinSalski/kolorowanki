@@ -15,6 +15,7 @@ import httpx
 import urllib3
 import sys
 import inspect
+from openai._httpx_client import SyncHttpxClientWrapper
 
 
 
@@ -40,8 +41,10 @@ def openai_api_key_check(api_key: str) -> bool:
 
 # Getting Open AI access
 def get_openai_client():
-    return OpenAI(api_key=st.session_state["openai_api_key"])
-
+    return OpenAI(
+        api_key=st.session_state["openai_api_key"],
+        http_client=SyncHttpxClientWrapper()
+    )   
 
 
 # Checking if client's design list exists and creaiting a new list if necessary
