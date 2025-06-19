@@ -1,15 +1,20 @@
 import streamlit as st
 import pandas as pd
-import requests
+#import requests
 import boto3
 import os
 import io
 from dotenv import load_dotenv
-from IPython.display import Image
+#from IPython.display import Image
 import openai
 from openai import OpenAI
 from openai import AuthenticationError
 from botocore.exceptions import ClientError
+
+import httpx
+import urllib3
+import sys
+import inspect
 
 
 
@@ -35,7 +40,7 @@ def openai_api_key_check(api_key: str) -> bool:
 
 # Getting Open AI access
 def get_openai_client():
-    return OpenAI(api_key="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")
+    return OpenAI(api_key=st.session_state["openai_api_key"])
 
 
 
@@ -598,6 +603,15 @@ if "OPENAI_API_KEY" in os.environ:
     st.write("🔑 Klucz środowiskowy znaleziony:")
     st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
     st.write("OpenAI version:", openai.__version__)
+    st.write("httpx:", httpx.__version__)
+    st.write("urllib3:", urllib3.__version__)
+    st.write("Python:", sys.version)
+    st.code(inspect.getfile(openai.OpenAI))
+    st.write("OpenAI version:", openai.__version__)
+    client = openai.OpenAI(
+    api_key=st.session_state["openai_api_key"]
+)
+    st.write("Client class:", type(client))
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
