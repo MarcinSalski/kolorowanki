@@ -9,7 +9,7 @@ for k in list(os.environ):
 # ✅ 2. Importy podstawowe
 import streamlit as st
 import openai
-from openai._httpx_client import SyncHttpxClientWrapper
+import httpx
 import inspect
 
 # 🧪 3. Diagnostyka — tylko raz, potem możesz to usunąć
@@ -18,10 +18,12 @@ st.code(inspect.getfile(openai.OpenAI))
 
 # 🧠 4. Funkcja do utworzenia klienta bez użycia proxy
 def get_openai_client():
-    return openai.OpenAI(
+    custom_http_client = httpx.Client()
+    return OpenAI(
         api_key=st.session_state["openai_api_key"],
-        http_client=SyncHttpxClientWrapper()  # zapobiega błędowi z "proxies"
+        http_client=custom_http_client
     )
+    
 
 import pandas as pd
 import requests
@@ -642,6 +644,7 @@ if "OPENAI_API_KEY" in os.environ:
     for key in list(os.environ):
         if "PROXY" in key.upper():
             del os.environ[key]
+st.code(inspect.getfile(openai.OpenAI))
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
