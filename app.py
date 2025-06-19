@@ -1,10 +1,28 @@
+# 🧹 1. Wyczyść wszystkie zmienne środowiskowe związane z proxy
 import os
+
 for k in list(os.environ):
     if "PROXY" in k.upper():
-        print("Deleting:", k)
+        print(f"Usuwanie zmiennej środowiskowej: {k} = {os.environ[k]}")
         del os.environ[k]
 
+# ✅ 2. Importy podstawowe
 import streamlit as st
+import openai
+from openai._httpx_client import SyncHttpxClientWrapper
+import inspect
+
+# 🧪 3. Diagnostyka — tylko raz, potem możesz to usunąć
+st.write("OpenAI version:", openai.__version__)
+st.code(inspect.getfile(openai.OpenAI))
+
+# 🧠 4. Funkcja do utworzenia klienta bez użycia proxy
+def get_openai_client():
+    return openai.OpenAI(
+        api_key=st.session_state["openai_api_key"],
+        http_client=SyncHttpxClientWrapper()  # zapobiega błędowi z "proxies"
+    )
+
 import pandas as pd
 import requests
 import boto3
@@ -12,7 +30,7 @@ import boto3
 import io
 from dotenv import load_dotenv
 from IPython.display import Image
-import openai
+
 from openai import OpenAI
 from openai import AuthenticationError
 from botocore.exceptions import ClientError
@@ -26,27 +44,27 @@ import inspect
 
 
 # Checking if Open AI API Key is valid
-def openai_api_key_check(api_key: str) -> bool:
-    try:
-        # Create a test client with the user's API key
-        client = OpenAI(api_key=api_key)
+# def openai_api_key_check(api_key: str) -> bool:
+#     try:
+#         # Create a test client with the user's API key
+#         client = OpenAI(api_key=api_key)
 
-        # Perform a lightweight, harmless call
-        client.models.list()  # This doesn't consume tokens
+#         # Perform a lightweight, harmless call
+#         client.models.list()  # This doesn't consume tokens
 
-        return True  # Key is valid
+#         return True  # Key is valid
 
-    except AuthenticationError:
-        return False  # Key is invalid
+#     except AuthenticationError:
+#         return False  # Key is invalid
 
-    except Exception:
-        return False  # Any other unexpected error
+#     except Exception:
+#         return False  # Any other unexpected error
 
 
 
 # Getting Open AI access
-def get_openai_client():
-    return OpenAI(api_key=st.session_state["openai_api_key"])
+# def get_openai_client():
+#     return OpenAI(api_key=st.session_state["openai_api_key"])
     
 
 
