@@ -35,7 +35,7 @@ def openai_api_key_check(api_key: str) -> bool:
 
 # Getting Open AI access
 def get_openai_client():
-    return OpenAI(api_key=st.session_state["openai_api_key"])
+    return OpenAI(api_key="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")
 
 
 
@@ -69,7 +69,6 @@ def save_df_as_public_csv(df, bucket, key):
         ACL="public-read",
         ContentType="text/csv"
     )
-
 
 
 # The function to generate design descriptions for kids
