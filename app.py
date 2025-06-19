@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-#import requests
+import requests
 import boto3
 import os
 import io
 from dotenv import load_dotenv
-#from IPython.display import Image
+from IPython.display import Image
 import openai
 from openai import OpenAI
 from openai import AuthenticationError
@@ -612,6 +612,12 @@ if "OPENAI_API_KEY" in os.environ:
     api_key=st.session_state["openai_api_key"]
 )
     st.write("Client class:", type(client))
+    for key in os.environ:
+        if "PROXY" in key.upper():
+            st.write(f"{key} = {os.environ[key]}")
+    for key in list(os.environ):
+        if "PROXY" in key.upper():
+            del os.environ[key]
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
