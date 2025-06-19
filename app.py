@@ -1,29 +1,12 @@
-# 🧹 1. Wyczyść wszystkie zmienne środowiskowe związane z proxy
-import os
 
-for k in list(os.environ):
-    if "PROXY" in k.upper():
-        print(f"Usuwanie zmiennej środowiskowej: {k} = {os.environ[k]}")
-        del os.environ[k]
-
-# ✅ 2. Importy podstawowe
 import streamlit as st
 import openai
 import httpx
 import inspect
+import os
 
-# 🧪 3. Diagnostyka — tylko raz, potem możesz to usunąć
-st.write("OpenAI version:", openai.__version__)
-st.code(inspect.getfile(openai.OpenAI))
 
-# 🧠 4. Funkcja do utworzenia klienta bez użycia proxy
-def get_openai_client():
-    custom_http_client = httpx.Client()
-    return OpenAI(
-        api_key=st.session_state["openai_api_key"],
-        http_client=custom_http_client
-    )
-    
+
 
 import pandas as pd
 import requests
@@ -45,28 +28,28 @@ import inspect
 
 
 
-# Checking if Open AI API Key is valid
-# def openai_api_key_check(api_key: str) -> bool:
-#     try:
-#         # Create a test client with the user's API key
-#         client = OpenAI(api_key=api_key)
+#Checking if Open AI API Key is valid
+def openai_api_key_check(api_key: str) -> bool:
+    try:
+        # Create a test client with the user's API key
+        client = OpenAI(api_key=api_key)
 
-#         # Perform a lightweight, harmless call
-#         client.models.list()  # This doesn't consume tokens
+        # Perform a lightweight, harmless call
+        client.models.list()  # This doesn't consume tokens
 
-#         return True  # Key is valid
+        return True  # Key is valid
 
-#     except AuthenticationError:
-#         return False  # Key is invalid
+    except AuthenticationError:
+        return False  # Key is invalid
 
-#     except Exception:
-#         return False  # Any other unexpected error
+    except Exception:
+        return False  # Any other unexpected error
 
 
 
-# Getting Open AI access
-# def get_openai_client():
-#     return OpenAI(api_key=st.session_state["openai_api_key"])
+#Getting Open AI access
+def get_openai_client():
+    return OpenAI(api_key=st.session_state["openai_api_key"])
     
 
 
@@ -625,26 +608,26 @@ if 'buffer' not in st.session_state:
 user_name=st.session_state["user_name"]
 st.markdown(f"Jesteś zalogowany jako {user_name}")  
 
-if "OPENAI_API_KEY" in os.environ:
-    st.write("🔑 Klucz środowiskowy znaleziony:")
-    st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
-    st.write("OpenAI version:", openai.__version__)
-    st.write("httpx:", httpx.__version__)
-    st.write("urllib3:", urllib3.__version__)
-    st.write("Python:", sys.version)
-    st.code(inspect.getfile(openai.OpenAI))
-    st.write("OpenAI version:", openai.__version__)
-    client = openai.OpenAI(
-    api_key=st.session_state["openai_api_key"]
-)
-    st.write("Client class:", type(client))
-    for key in os.environ:
-        if "PROXY" in key.upper():
-            st.write(f"{key} = {os.environ[key]}")
-    for key in list(os.environ):
-        if "PROXY" in key.upper():
-            del os.environ[key]
-st.code(inspect.getfile(openai.OpenAI))
+# if "OPENAI_API_KEY" in os.environ:
+#     st.write("🔑 Klucz środowiskowy znaleziony:")
+#     st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
+#     st.write("OpenAI version:", openai.__version__)
+#     st.write("httpx:", httpx.__version__)
+#     st.write("urllib3:", urllib3.__version__)
+#     st.write("Python:", sys.version)
+#     st.code(inspect.getfile(openai.OpenAI))
+#     st.write("OpenAI version:", openai.__version__)
+#     client = openai.OpenAI(
+#     api_key=st.session_state["openai_api_key"]
+# )
+#     st.write("Client class:", type(client))
+#     for key in os.environ:
+#         if "PROXY" in key.upper():
+#             st.write(f"{key} = {os.environ[key]}")
+#     for key in list(os.environ):
+#         if "PROXY" in key.upper():
+#             del os.environ[key]
+# st.code(inspect.getfile(openai.OpenAI))
 
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
