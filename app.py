@@ -13,6 +13,8 @@ import io
 from dotenv import load_dotenv
 from IPython.display import Image
 import openai
+from openai import OpenAI
+from openai import AuthenticationError
 from botocore.exceptions import ClientError
 
 import httpx
