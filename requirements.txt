@@ -1,4 +1,5 @@
-openai==1.47.0
+openai==1.25.0
+--no-cache-dir
 streamlit
 python-dotenv
 boto3
