@@ -1,29 +1,16 @@
 
 import streamlit as st
-import openai
-import httpx
-import inspect
 import os
-
-
-
-
 import pandas as pd
 import requests
 import boto3
-
 import io
 from dotenv import load_dotenv
 from IPython.display import Image
-
+import openai
 from openai import OpenAI
 from openai import AuthenticationError
 from botocore.exceptions import ClientError
-
-import httpx
-import urllib3
-import sys
-import inspect
 
 
 
@@ -31,12 +18,8 @@ import inspect
 #Checking if Open AI API Key is valid
 def openai_api_key_check(api_key: str) -> bool:
     try:
-        # Create a test client with the user's API key
         client = OpenAI(api_key=api_key)
-
-        # Perform a lightweight, harmless call
-        client.models.list()  # This doesn't consume tokens
-
+        client.models.list()  
         return True  # Key is valid
 
     except AuthenticationError:
@@ -69,13 +52,6 @@ def list_file_exists(bucket, key):
 def save_df_as_public_csv(df, bucket, key):
     buffer = io.StringIO()
     df.to_csv(buffer, index=False)
-    # s3 = boto3.client(
-    #     "s3",
-    #     region_name="fra1",
-    #     endpoint_url="https://fra1.digitaloceanspaces.com",
-    #     aws_access_key_id="TWÓJ_KEY",
-    #     aws_secret_access_key="TWÓJ_SECRET"
-    # )
     s3.put_object(
         Bucket=bucket,
         Key=key,
@@ -538,25 +514,24 @@ if not st.session_state.get("user_name"):
 
 
 if not st.session_state.get("openai_api_key"):
-    st.session_state["openai_api_key"]="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"
-    
-#     if "OPENAI_API_KEY" in os.environ:
-#         st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
+    #st.session_state["openai_api_key"]="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"
+    if "OPENAI_API_KEY" in os.environ:
+        st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
 
-#     else:
-#         st.info("Podaj klucz Open AI API Key")
-#         st.session_state["openai_api_key"] = st.text_input(" ", type="password")
-#         openai_api_key=st.session_state["openai_api_key"]
-#         if st.session_state["openai_api_key"]:
-#             if openai_api_key_check(openai_api_key) == True:
-#                 st.rerun()
-#             else:
-#                 st.markdown("Niepoprawny klucz Open AI")
-#                 st.session_state["openai_api_key"]=""
-#                 st.stop()
+    else:
+        st.info("Podaj klucz Open AI API Key")
+        st.session_state["openai_api_key"] = st.text_input(" ", type="password")
+        openai_api_key=st.session_state["openai_api_key"]
+        if st.session_state["openai_api_key"]:
+            if openai_api_key_check(openai_api_key) == True:
+                st.rerun()
+            else:
+                st.markdown("Niepoprawny klucz Open AI")
+                st.session_state["openai_api_key"]=""
+                st.stop()
 
-# if not st.session_state.get("openai_api_key"):
-#     st.stop()
+if not st.session_state.get("openai_api_key"):
+    st.stop()
 
 
 # Main section after login
@@ -608,27 +583,6 @@ if 'buffer' not in st.session_state:
 user_name=st.session_state["user_name"]
 st.markdown(f"Jesteś zalogowany jako {user_name}")  
 
-# if "OPENAI_API_KEY" in os.environ:
-#     st.write("🔑 Klucz środowiskowy znaleziony:")
-#     st.write(os.environ["OPENAI_API_KEY"][:5] + "..." + os.environ["OPENAI_API_KEY"][-5:])
-#     st.write("OpenAI version:", openai.__version__)
-#     st.write("httpx:", httpx.__version__)
-#     st.write("urllib3:", urllib3.__version__)
-#     st.write("Python:", sys.version)
-#     st.code(inspect.getfile(openai.OpenAI))
-#     st.write("OpenAI version:", openai.__version__)
-#     client = openai.OpenAI(
-#     api_key=st.session_state["openai_api_key"]
-# )
-#     st.write("Client class:", type(client))
-#     for key in os.environ:
-#         if "PROXY" in key.upper():
-#             st.write(f"{key} = {os.environ[key]}")
-#     for key in list(os.environ):
-#         if "PROXY" in key.upper():
-#             del os.environ[key]
-# st.code(inspect.getfile(openai.OpenAI))
-
 design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
     ["Zaprojektuj kolorowankę", 
      'Lista opisów',
@@ -636,12 +590,14 @@ design_tab, list_tab, image_tab, gallery_tab, logout_tab = st.tabs(
      'Galeria kolorowanek',
      'Wyloguj się'])
 
-# Second screen
+
+
+# Generating image descriptions
 with design_tab:
     c0, c1 = st.columns([0.3,0.7])
     
     with c0:
-        number_of_descriptions = st.selectbox("Ile zrobić projektów?", ["jeden","dwa","trzy","cztery","pięć"]) 
+        number_of_descriptions = st.selectbox("Ile zrobić projektów?", ["1","2","3","4","5"]) 
         design_type=st.selectbox('Rodzaj kolorowanki',['dla dzieci','dla dorosłych','satyryczny'])  
     
     with c1:
@@ -718,7 +674,7 @@ with design_tab:
         
                           
 
-# Third screen
+# List of descriptions
 with list_tab:
     filtered_descriptions_df = st.session_state["descriptions_df"]
     filtered_descriptions_df = filtered_descriptions_df[filtered_descriptions_df['Nr projektu'] != 0]
@@ -741,7 +697,8 @@ with list_tab:
             st.success('Lista usunięta')
             st.rerun()
 
-# Fourth screen
+
+# Editing descriptions and image generation
 with image_tab:
     descriptions_df=st.session_state["descriptions_df"]
     max_id=descriptions_df["Nr projektu"].max()
@@ -834,6 +791,7 @@ with image_tab:
 # Gallery
 with gallery_tab:
     display_images_with_download()
+
 
 
 # Save and logout
