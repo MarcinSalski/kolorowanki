@@ -15,7 +15,7 @@ import httpx
 import urllib3
 import sys
 import inspect
-from openai._httpx_client import SyncHttpxClientWrapper
+from openai import SyncHttpxClientWrapper
 
 
 
