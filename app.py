@@ -413,8 +413,6 @@ def get_unique_filename(s3, BUCKET_NAME, img_fold_n, curr_img_n):
 
 def list_images():
     response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix=img_fold_n + "/")
-    #files = response.get("Contents", [])
-    #return [f["Key"] for f in files if f["Key"].lower().endswith(".png")]
     sorted_files = sorted(
         response['Contents'],
         key=lambda x: x['LastModified'],
@@ -457,13 +455,10 @@ load_dotenv()
 s3 = boto3.client(
     's3',
     #region_name='fra1',
-    #endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
-    endpoint_url='https://fra1.digitaloceanspaces.com',
-    #aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-    aws_access_key_id='DO00WCGEXAV7Q69UVVQP',
-    #aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
-    aws_secret_access_key='cEBjAEWGLxiMLasnhC66v8wlMibddiQvJkUxyjQzLGY'
-)
+    endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+)    
 BUCKET_NAME="kolorowanki"
 img_fold_n='images'
 list_folder_name='lists'
