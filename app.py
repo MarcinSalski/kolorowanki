@@ -455,7 +455,8 @@ load_dotenv()
 s3 = boto3.client(
     's3',
     #region_name='fra1',
-    endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
+    #endpoint_url=os.environ.get('AWS_ENDPOINT_URL_S3'),
+    endpoint_url='https://fra1.digitaloceanspaces.com',
     aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
     aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
 )    
