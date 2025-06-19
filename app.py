@@ -1,21 +1,24 @@
+import os
+for k in list(os.environ):
+    if "PROXY" in k.upper():
+        print("Deleting:", k)
+        del os.environ[k]
+
 import streamlit as st
 import pandas as pd
 import requests
 import boto3
-import os
+
 import io
 from dotenv import load_dotenv
 from IPython.display import Image
 import openai
-from openai import OpenAI
-from openai import AuthenticationError
 from botocore.exceptions import ClientError
 
 import httpx
 import urllib3
 import sys
 import inspect
-from openai import SyncHttpxClientWrapper
 
 
 
@@ -41,10 +44,8 @@ def openai_api_key_check(api_key: str) -> bool:
 
 # Getting Open AI access
 def get_openai_client():
-    return OpenAI(
-        api_key=st.session_state["openai_api_key"],
-        http_client=SyncHttpxClientWrapper()
-    )   
+    return OpenAI(api_key=st.session_state["openai_api_key"])
+    
 
 
 # Checking if client's design list exists and creaiting a new list if necessary
