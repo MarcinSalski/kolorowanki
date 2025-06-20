@@ -59,7 +59,7 @@ def save_df_as_public_csv(df, bucket, key):
         ACL="public-read",
         ContentType="text/csv"
     )
-    print(f"Saved to https://{bucket}.fra1.digitaloceanspaces.com/{key}")
+    st.write(f"Saved to https://{bucket}.fra1.digitaloceanspaces.com/{key}")
 
 
 # The function to generate design descriptions for kids
