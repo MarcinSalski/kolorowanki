@@ -52,14 +52,13 @@ def list_file_exists(bucket, key):
 def save_df_as_public_csv(df, bucket, key):
     buffer = io.StringIO()
     df.to_csv(buffer, index=False)
-    s3.upload_fileobj(buffer, bucket, key, ExtraArgs={"ACL": "public-read"})
-    # s3.put_object(
-    #     Bucket=bucket,
-    #     Key=key,
-    #     Body=buffer.getvalue(),
-    #     ACL="public-read",
-    #     ContentType="text/csv"
-    # )
+    s3.put_object(
+        Bucket=bucket,
+        Key=key,
+        Body=buffer.getvalue(),
+        ACL="public-read",
+        ContentType="text/csv"
+    )
 
 
 # The function to generate design descriptions for kids
