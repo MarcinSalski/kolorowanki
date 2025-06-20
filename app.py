@@ -7,7 +7,6 @@ import boto3
 import io
 from dotenv import load_dotenv
 from IPython.display import Image
-import openai
 from openai import OpenAI
 from openai import AuthenticationError
 from botocore.exceptions import ClientError
@@ -243,8 +242,6 @@ def clear_output_path(text: str) -> str:
     return text
 
 
-#def identify_project(project_id)
-
 
 
 # Preparing prompt for image generation
@@ -420,10 +417,8 @@ def list_images():
         reverse=True
     )
 
-    # Zwracaj tylko klucze (ścieżki do obrazków)
-    return [item['Key'] for item in sorted_files if item['Key'].lower().endswith((".png", ".jpg", ".jpeg"))]
-
-
+    
+    
 
 def display_images_with_download():
     image_keys = list_images()
