@@ -417,8 +417,10 @@ def list_images():
         reverse=True
     )
 
-    
-    
+    # Zwracaj tylko klucze (ścieżki do obrazków)
+    return [item['Key'] for item in sorted_files if item['Key'].lower().endswith((".png", ".jpg", ".jpeg"))]
+
+
 
 def display_images_with_download():
     image_keys = list_images()
