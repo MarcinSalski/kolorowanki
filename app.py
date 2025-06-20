@@ -59,7 +59,7 @@ def save_df_as_public_csv(df, bucket, key):
         ACL="public-read",
         ContentType="text/csv"
     )
-    st.write(f"Saved to https://{bucket}.fra1.digitaloceanspaces.com/{key}")
+    
 
 
 # The function to generate design descriptions for kids
@@ -498,7 +498,6 @@ if not st.session_state.get("user_name"):
             st.rerun()
         else:
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
-            list_file=f"{PATH_TO_DO}{list_name}"
             save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_name)
             st.session_state["list_file"]=list_file
             st.session_state["full_list_df"]=descriptions_df
@@ -691,9 +690,8 @@ with list_tab:
         if st.button("Usuń wszystkie swoje projekty",use_container_width=True):
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             list_name=st.session_state["list_name"]
-            list_file=f"{PATH_TO_DO}{list_name}"
             st.session_state["descriptions_df"]=descriptions_df
-            save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
+            save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_name)
             st.success('Lista usunięta')
             st.rerun()
 
@@ -745,11 +743,10 @@ with image_tab:
         if st.button('Usuń ten opis',use_container_width=True):
             descriptions_df=st.session_state["descriptions_df"]
             list_name=st.session_state["list_name"]
-            list_file=f"{PATH_TO_DO}{list_name}"
             if project_id>0:
                 descriptions_df = descriptions_df[descriptions_df['Nr projektu'] != project_id]
                 st.session_state["descriptions_df"]=descriptions_df
-                save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
+                save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_name)
                 st.success('Opis usunięty')
                 st.rerun()
             else:
@@ -799,8 +796,7 @@ with gallery_tab:
 with logout_tab:
     if st.button("Wyloguj się", use_container_width=True):
         list_name=st.session_state["list_name"]
-        list_file=f"{PATH_TO_DO}{list_name}"
-        save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
+        save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_name)
         st.session_state["user_name"]=""
         st.session_state["openai_api_key"]=""
         st.rerun()
