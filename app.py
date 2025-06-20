@@ -740,6 +740,7 @@ with image_tab:
         if st.button('Usuń ten opis',use_container_width=True):
             descriptions_df=st.session_state["descriptions_df"]
             list_name=st.session_state["list_name"]
+            list_file=f"{PATH_TO_DO}{list_name}"
             if project_id>0:
                 descriptions_df = descriptions_df[descriptions_df['Nr projektu'] != project_id]
                 st.session_state["descriptions_df"]=descriptions_df
