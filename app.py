@@ -452,12 +452,16 @@ def display_images_with_download():
 
 
 load_dotenv()
+
 s3 = boto3.client(
     's3',
+    region_name='fra1',
     endpoint_url='https://fra1.digitaloceanspaces.com',
     aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
     aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
 )    
+
+
 BUCKET_NAME="kolorowanki"
 img_fold_n='images'
 list_folder_name='lists'
