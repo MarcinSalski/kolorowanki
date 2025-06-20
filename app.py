@@ -499,7 +499,7 @@ if not st.session_state.get("user_name"):
         else:
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_name)
-            st.session_state["list_file"]=list_file
+            st.session_state["list_name"]=list_name
             st.session_state["full_list_df"]=descriptions_df
             st.session_state["descriptions_df"]=descriptions_df
             st.session_state['descr_counter']=descriptions_df['Nr projektu'].max()
