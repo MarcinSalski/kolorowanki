@@ -510,7 +510,6 @@ if not st.session_state.get("user_name"):
 
 
 if not st.session_state.get("openai_api_key"):
-    #st.session_state["openai_api_key"]="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"
     if "OPENAI_API_KEY" in os.environ:
         st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
 
