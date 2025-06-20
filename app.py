@@ -510,7 +510,7 @@ if not st.session_state.get("user_name"):
 
 
 if not st.session_state.get("openai_api_key"):
-    #st.session_state["openai_api_key"]="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"
+    #st.session_state["openai_api_key"]="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"
     if "OPENAI_API_KEY" in os.environ:
         st.session_state["openai_api_key"] = os.environ["OPENAI_API_KEY"]
 
@@ -680,6 +680,7 @@ with list_tab:
     with c0:
         if st.button("Zapamiętaj te projekty",use_container_width=True):
             list_name=st.session_state["list_name"]
+            list_file=f"{PATH_TO_DO}{list_name}"
             descriptions_df=st.session_state["descriptions_df"]
             save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.success('Lista zapisana do pliku')
@@ -688,6 +689,7 @@ with list_tab:
         if st.button("Usuń wszystkie swoje projekty",use_container_width=True):
             descriptions_df=pd.DataFrame([{"Nr projektu":0, "Tytuł":"","Rodzaj":"", "Opis":""}])
             list_name=st.session_state["list_name"]
+            list_file=f"{PATH_TO_DO}{list_name}"
             st.session_state["descriptions_df"]=descriptions_df
             save_df_as_public_csv(descriptions_df, BUCKET_NAME, list_file)
             st.success('Lista usunięta')
