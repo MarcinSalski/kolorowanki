@@ -473,6 +473,9 @@ refuse_image_name="Nie_moge.png"
 c0, c1, = st.columns([0.7,0.3])
 with c0:
     st.title('Moje kolorowanki')
+    st.markdown("""Przy pomocy tej aplikacji, w ciągu kilku minut stworzysz dla swojego dziecka 
+                czy wnuka kolorowankę jakiej nikt inny nie ma. Wystarczy ją wydrukować 
+                i pokolorować. Miłej zabawy.""")
         
 with c1:
     opening_image=f"{PATH_TO_DO}{img_fold_n}/{opening_image_name}"
