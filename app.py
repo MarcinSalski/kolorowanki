@@ -602,7 +602,7 @@ with design_tab:
             with st.chat_message(page_description["role"]):
                 st.markdown(page_description["content"])
         prompt = st.text_area("Napisz co ma być na obrazku",height=124)
-    if st.button("Przygotuj opisy",use_container_width=True):
+    if st.button("Przygotuj szczegółowe opisy obrazków",use_container_width=True):
         user_message = {"role": "user", "content": f"{prompt}. Liczba projektów: {number_of_descriptions}"}
         with st.chat_message("user"):
             st.markdown(user_message["content"])
